@@ -8,6 +8,10 @@ using Unity.MLAgents.Actuators;
 public class MoveToGoalAgent : Agent
 {
     [SerializeField] private Transform targetTransform;
+    public override void OnEpisodeBegin()
+    {
+    
+    }
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
@@ -21,6 +25,12 @@ public class MoveToGoalAgent : Agent
         float moveSpeed = 1f;
         transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        SetReward(1f);
+        EndEpisode();
     }
 
 }
