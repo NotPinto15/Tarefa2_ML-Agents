@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
+//make the dictionary elements their own serializable class
+//so we can edit them in the inspector
 [System.Serializable]
 public class WorldState {
 
@@ -11,6 +11,7 @@ public class WorldState {
 
 public class WorldStates {
 
+    // Constructor
     public Dictionary<string, int> states;
 
     public WorldStates() {
@@ -18,32 +19,52 @@ public class WorldStates {
         states = new Dictionary<string, int>();
     }
 
-    bool HasState(string key) => states.ContainsKey(key);
+    /************** Helper funtions ****************/
+    // Check for a key
+    public bool HasState(string key) {
 
-    void AddState(string key, int value) {
+        return states.ContainsKey(key);
+    }
+
+    // Add to our dictionary
+    private void AddState(string key, int value) {
 
         states.Add(key, value);
     }
 
-    void RemoveState(string key) {
-
-        if (HasState(key)) states.Remove(key);
-    }
-
     public void ModifyState(string key, int value) {
 
+        // If it contains this key
         if (HasState(key)) {
 
+            // Add the value to the state
             states[key] += value;
-            if (states[key] <= 0) RemoveState(key);
+            // If it's less than zero then remove it
+            if (states[key] <= 0) {
+
+                // Call the RemoveState method
+                RemoveState(key);
+            }
         } else {
 
             AddState(key, value);
         }
     }
 
-    void SetState(string key, int value) {
+    // Method to remove a state
+    public void RemoveState(string key) {
 
+        // Check if it frist exists
+        if (HasState(key)) {
+
+            states.Remove(key);
+        }
+    }
+
+    // Set a state
+    public void SetState(string key, int value) {
+
+        // Check if it exists
         if (HasState(key)) {
 
             states[key] = value;
@@ -53,5 +74,8 @@ public class WorldStates {
         }
     }
 
-    public Dictionary<string, int> GetStates() => states;
+    public Dictionary<string, int> GetStates() {
+
+        return states;
+    }
 }

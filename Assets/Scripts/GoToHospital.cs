@@ -1,5 +1,4 @@
-public class Register : GAction {
-
+﻿public class GoToHospital : GAction {
     public override bool PrePerform() {
 
         return true;
