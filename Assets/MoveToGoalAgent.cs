@@ -19,15 +19,37 @@ public class MoveToGoalAgent : Agent
         sensor.AddObservation(targetTransform.position);
     }
     public override void OnActionReceived(ActionBuffers actions)
+{
+    // Make sure the continuous actions are not empty
+    if (actions.ContinuousActions.Length >= 2)
     {
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
 
         float moveSpeed = 1f;
         transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
-
     }
+    else
+    {
+        Debug.LogError("Unexpected number of continuous actions received.");
+    }
+}
+    
+    public override void Heuristic(in ActionBuffers actionsOut)
+{
+    ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
 
+    // Make sure the continuous actions are not empty
+    if (continuousActions.Length >= 2)
+    {
+        continuousActions[0] = Input.GetAxisRaw("Horizontal");
+        continuousActions[1] = Input.GetAxisRaw("Vertical");
+    }
+    else
+    {
+        Debug.LogError("Unexpected number of continuous actions in Heuristic.");
+    }
+}
     private void OnTriggerEnter(Collider other) 
     {
         if (other.TryGetComponent<Goal>(out Goal goal))
