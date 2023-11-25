@@ -9,18 +9,18 @@ public class Spawn : MonoBehaviour {
 
     void Start() {
 
-        for (int i = 0; i < numPatients; ++i) {
+        //for (int i = 0; i < numPatients; ++i) {
 
-            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
-        }
+        //    Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
+        //}
 
-        Invoke("SpawnPatient", 5.0f);
+        Invoke("SpawnPatient", 10.0f);
     }
 
     void SpawnPatient() {
 
         Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
-        Invoke("SpawnPatient", Random.Range(2.0f, 10.0f));
+        Invoke("SpawnPatient", Random.Range(5.0f, 10.0f));
     }
 
     void Update() {
