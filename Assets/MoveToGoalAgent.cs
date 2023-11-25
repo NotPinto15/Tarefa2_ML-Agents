@@ -15,7 +15,11 @@ public class MoveToGoalAgent : Agent
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Debug.Log(actions.DiscreteActions[0]);
+        float moveX = actions.ContinuousActions[0];
+        float moveZ = actions.ContinuousActions[1];
+
+        float moveSpeed = 1f;
+        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
     }
 
