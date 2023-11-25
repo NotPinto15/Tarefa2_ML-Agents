@@ -21,11 +21,10 @@ public class GAgent : MonoBehaviour {
 
     public List<GAction> actions = new List<GAction>();
     public Dictionary<SubGoal, int> goals = new Dictionary<SubGoal, int>();
-    public WorldStates beliefs = new WorldStates();
 
-    // GPlanner planner; // Commented out to avoid an error
+    GPlanner planner;
     Queue<GAction> actionQueue;
-    public GAction currentAction;  
+    public GAction currentAvtion;
     SubGoal currentGoal;
 
     // Start is called before the first frame update
