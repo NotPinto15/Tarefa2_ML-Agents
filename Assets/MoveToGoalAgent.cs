@@ -10,7 +10,8 @@ public class MoveToGoalAgent : Agent
     [SerializeField] private Transform targetTransform;
     public override void OnEpisodeBegin()
     {
-    
+        transform.position = Vector3.zero;
+
     }
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -29,8 +30,17 @@ public class MoveToGoalAgent : Agent
 
     private void OnTriggerEnter(Collider other) 
     {
-        SetReward(1f);
-        EndEpisode();
+        if (other.TryGetComponent<Goal>(out Goal goal))
+        {
+            SetReward(1f);
+            EndEpisode();
+        }
+        if (other.TryGetComponent<Wall>(out Wall wall))
+        {
+            SetReward(-1f);
+            EndEpisode();
+        }
+    
     }
 
 }
